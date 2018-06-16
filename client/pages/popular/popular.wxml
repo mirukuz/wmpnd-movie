@@ -1,0 +1,19 @@
+<!--pages/popular/popular.wxml-->
+<view
+  class='item'
+  wx:for='{{movieList}}'
+  wx:for-item='movie'
+  wx:key='{{movie.id}}'
+  bindtap="onTapGetDetail"
+  data-id="{{movie.id}}"
+>
+  <image
+    class='poster'
+    src='{{movie.image}}'
+  />
+  <view class='text-wrapper'>
+    <view class='title'>{{ movie.title }}</view>
+    <view class='category'>{{ movie.category }}</view>
+  </view>
+</view>
+

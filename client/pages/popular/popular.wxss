@@ -1,0 +1,31 @@
+/* pages/popular/popular.wxss */
+.wrapper {
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.item {
+  background-color: #fff;
+  height: 250rpx;
+  width: 650rpx;
+  display: flex;
+  margin: 50rpx;
+  border: 1px solid #dedede;
+}
+.title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+.category {
+  font-size: 26rpx;
+}
+.poster {
+  width: 170rpx;
+  height: 250rpx;
+}
+.text-wrapper {
+  padding: 40rpx;
+}

@@ -1,0 +1,40 @@
+<!--pages/detail/detail.wxml-->
+<view class='wrapper'>
+  <view class='card'>
+    <image
+        class='poster'
+        src='{{movie.image}}'
+      />
+    <view class='title' mode='widthFix'>
+      {{ movie.title }}
+    </view>
+    <view class='description'>
+      {{ movie.description }}
+    </view>
+    <view class='buttons'>
+      <button>查看影评</button>
+      <button bindtap='showModal'>添加影评</button>
+    </view>
+  </view>
+</view>
+<view
+  wx:if='{{showBottomButton == true}}'
+  class='bottom-button-wrapper'
+>
+  <view class='bottom-button-overlay' bindtap='hideModal'></view>
+  <view
+    class='bottom-button'
+    bindtap='navToEditReview'
+    data-id='{{movie.id}}'
+  >
+    文字
+  </view>
+  <view
+    class='bottom-button'
+    bindtap='navToEditReview'
+    data-id='{{movie.id}}'
+  >
+    音频
+  </view>
+  <view class='bottom-button' bindtap='hideModal'>取消</view>
+</view>

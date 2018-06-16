@@ -1,0 +1,50 @@
+<!--pages/editReview/editReview.wxml-->
+<!--pages/detail/detail.wxml-->
+<view class='wrapper'>
+  <view class='card'>
+    <image
+        class='poster'
+        src='{{movie.image}}'
+      />
+    <view class='title' mode='widthFix'>
+      {{ movie.title }}
+    </view>
+    <form
+      wx:if='{{!ready}}'
+      class='review-form'
+      bindsubmit="bindFormSubmit">
+      <textarea
+        placeholder='输入你的影评内容...'
+        name='review'
+        value='{{review}}'
+        class='review-form-textarea'
+        auto-focus="true" />
+          <button
+            class='button-complete'
+            form-type="submit"
+          >
+            完成
+          </button>
+    </form>
+    <view class='review-preview' wx:if='{{ready}}'>
+      <view class='review-user'>
+        <image
+          class='review-user-avatar'
+          src='{{userInfo.avatarUrl}}'
+        />
+        <view class='review-user-name'>
+          {{ userInfo.nickName }}的影评
+        </view>
+      </view>
+      <view class='review-content'>{{review}}</view>
+      <view class='buttons'>
+        <button bindtap='enterEditMode'>重新编辑</button>
+        <button
+          bindtap='publishReview'
+          data-id='{{movie.id}}'>
+          发布影评
+        </button>
+      </view>
+    </view>
+  </view>
+</view>
