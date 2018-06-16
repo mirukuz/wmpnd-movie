@@ -48,10 +48,9 @@ Page({
           })
 
           setTimeout(() => {
-            let id = event.currentTarget.dataset.id
-            console.log(id)
+            let movie = this.data.movie;
             wx.navigateTo({
-              url: '/pages/reviews/reviews?id=' + id,
+              url: `/pages/reviews/reviews?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
             })
           }, 1500)
         } else {
@@ -80,45 +79,17 @@ Page({
     })
   },
 
-  getMovie(id) {
-    wx.showLoading({
-      title: '加载影评功能中...',
-    })
-
-    qcloud.request({
-      url: config.service.movieDetail + id,
-      success: result => {
-        wx.hideLoading()
-
-        let data = result.data
-        console.log(data);
-
-        if (!data.code) {
-          this.setData({
-            movie: data.data
-          })
-          console.log('$$$$$', this.data.movie)
-        } else {
-          setTimeout(() => {
-            wx.navigateBack()
-          }, 2000)
-        }
-      },
-      fail: () => {
-        wx.hideLoading()
-
-        setTimeout(() => {
-          wx.navigateBack()
-        }, 2000)
-      }
-    })
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getMovie(options.id);
+    this.setData({
+      movie: {
+        title: options.title,
+        image: options.image,
+        id: options.id,
+      }
+    })
     app.checkSession({
       success: ({ userInfo }) => {
         console.log('userInfo', userInfo)

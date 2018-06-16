@@ -1,3 +1,5 @@
+<!--pages/reviewDetail/reviewDetail.wxml-->
+<!--pages/editReview/editReview.wxml-->
 <!--pages/detail/detail.wxml-->
 <view class='wrapper'>
   <view class='card'>
@@ -8,12 +10,25 @@
     <view class='title' mode='widthFix'>
       {{ movie.title }}
     </view>
-    <view class='description'>
-      {{ movie.description }}
-    </view>
-    <view class='buttons'>
-      <button bindtap='navToReviewList'>查看影评</button>
-      <button bindtap='showModal'>添加影评</button>
+    <view class='review-preview'>
+      <view class='review-user'>
+        <image
+          class='review-user-avatar'
+          src='{{reviewDetail.avatar}}'
+        />
+        <view class='review-user-name'>
+          {{ reviewDetail.username }}的影评
+        </view>
+      </view>
+      <view class='review-content'>{{reviewDetail.content}}</view>
+      <view class='buttons'>
+        <button bindtap='addToCollection'>
+          收藏影评
+        </button>
+        <button bindtap='showModal'>
+          写影评
+        </button>
+      </view>
     </view>
   </view>
 </view>

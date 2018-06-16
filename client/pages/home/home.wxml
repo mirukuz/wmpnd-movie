@@ -9,7 +9,20 @@
   </view>
   <button class='unlogin-btn' open-type='getUserInfo' bindgetuserinfo='onTapLogin'>微信登录</button>
 </view>
-<view wx:if='{{userInfo}}' class='wrapper'>
+<view class='recommendation' wx:if='{{userInfo}}'>
+  <image class='poster' src='{{recommendation.movie.image}}' />
+  <view class='title'>{{ recommendation.movie.title }}</view>
+  <view class='reviewer'>
+    <image
+      class='reviewer-avatar'
+      src='{{recommendation.review.avatar}}'
+    />
+    <view class='reviewer-name'>
+      {{ recommendation.review.username }} 给你推荐了一部电影
+    </view>
+  </view>
+</view>
+<view wx:if='{{userInfo}}' class='button-wrapper'>
   <button bindtap='navToPopular'>热门</button>
   <button bindtap='test'>我的</button>
 </view>

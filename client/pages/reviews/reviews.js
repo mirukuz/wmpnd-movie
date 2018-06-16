@@ -10,7 +10,22 @@ Page({
    * 页面的初始数据
    */
   data: {
+    movie: {},
     reviewList: [],
+  },
+
+  backToHome() {
+    wx.navigateTo({
+      url: '/pages/home/home',
+    })
+  },
+
+  navToReviewDetail(e) {
+    let reviewId = e.currentTarget.dataset.id;
+    let movie = this.data.movie;
+    wx.navigateTo({
+      url: `/pages/reviewDetail/reviewDetail?id=${reviewId}&movieId=${movie.id}&title=${movie.title}&image=${movie.image}`,
+    })
   },
 
   getReviewList(id) {
@@ -36,6 +51,14 @@ Page({
    */
   onLoad: function (options) {
     this.getReviewList(options.id)
+    console.log('option',options)
+    this.setData({
+      movie: {
+        id: options.id,
+        title: options.title,
+        image: options.image
+      }
+    })
   },
 
   /**

@@ -1,17 +1,55 @@
+// pages/reviewDetail/reviewDetail.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
-// pages/detail/detail.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    movie: {},
-    showBottomButton: false
+    movie: null,
+    reviewDetail: null,
   },
 
-  showModal () {
+  addToCollection() {
+    wx.showLoading({
+      title: '正在添加到收藏...',
+    })
+
+    qcloud.request({
+      url: config.service.addCollection,
+      login: true,
+      method: 'PUT',
+      data: this.data.reviewDetail,
+      success: result => {
+        wx.hideLoading()
+
+        let data = result.data
+
+        if (!data.code) {
+          wx.showToast({
+            title: '已添加到收藏',
+          })
+        } else {
+          wx.showToast({
+            icon: 'none',
+            title: '添加到收藏失败',
+          })
+        }
+      },
+      fail: () => {
+        wx.hideLoading()
+
+        wx.showToast({
+          icon: 'none',
+          title: '添加到收藏失败',
+        })
+      }
+    })
+
+  },
+
+  showModal() {
     this.setData({
       showBottomButton: true
     })
@@ -22,27 +60,21 @@ Page({
       showBottomButton: false
     })
   },
-  navToReviewList() {
-    let movie = this.data.movie;
-    wx.navigateTo({
-      url: `/pages/reviews/reviews?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
-    })
-  },
+
   navToEditReview(e) {
     let id = e.currentTarget.dataset.id
-    let movie = this.data.movie
     wx.navigateTo({
-      url: `/pages/editReview/editReview?id=${id}&title=${movie.title}&image=${movie.image}`,
+      url: '/pages/editReview/editReview?id=' + id,
     })
   },
 
-  getMovie(id) {
+  getReviewDetail(id) {
     wx.showLoading({
-      title: '电影数据加载中...',
+      title: '影评详情加载中...',
     })
 
     qcloud.request({
-      url: config.service.movieDetail + id,
+      url: config.service.reviewDetail + id,
       success: result => {
         wx.hideLoading()
 
@@ -51,7 +83,7 @@ Page({
 
         if (!data.code) {
           this.setData({
-            movie: data.data
+            reviewDetail: data.data
           })
         } else {
           setTimeout(() => {
@@ -69,11 +101,25 @@ Page({
     })
   },
 
+  navToEditReview() {
+    let movie = this.data.movie
+    wx.navigateTo({
+      url: `/pages/editReview/editReview?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getMovie(options.id)
+    this.setData({
+      movie: {
+        title: options.title,
+        image: options.image,
+        id: options.id
+      }
+    })
+    this.getReviewDetail(options.id)
   },
 
   /**

@@ -3,6 +3,8 @@
   wx:for='{{reviewList}}'
   wx:key='{{item.key}}'
   class='review'
+  bindtap='navToReviewDetail'
+  data-id='{{item.id}}'
 >
   <view class='user'>
     <image
@@ -15,6 +17,6 @@
   </view>
   <view class='content'>{{item.content}}</view>
 </view>
-<button>
+<button bindtap='backToHome'>
     回到首页
 </button>

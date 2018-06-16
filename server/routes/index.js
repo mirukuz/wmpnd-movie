@@ -44,4 +44,14 @@ router.post('/review', validationMiddleware, controllers.review.add)
 // 获取影评列表
 router.get('/review/:id', controllers.review.list)
 
+router.get('/review/detail/:id', controllers.review.detail)
+
+router.get('/recommendation', controllers.recommendation.detail)
+
+// 添加到用户收藏列表
+router.put('/collection', validationMiddleware, controllers.collection.add)
+
+// 获取用户收藏列表
+// router.get('/collection', validationMiddleware, controllers.collection.list)
+
 module.exports = router

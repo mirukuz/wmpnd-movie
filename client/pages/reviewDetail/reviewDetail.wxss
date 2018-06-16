@@ -1,0 +1,90 @@
+/* pages/reviewDetail/reviewDetail.wxss */
+.wrapper {
+  padding: 150rpx 50rpx 50rpx;
+  
+}
+.poster {
+  position: absolute;
+  top: -75rpx;
+  left: 175rpx;
+  width: 300rpx;
+  height: 400rpx;
+}
+.card {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #dedede;
+  padding: 350rpx 75rpx 75rpx;
+  height: 100%;
+}
+.title {
+  font-size: 36rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+.buttons {
+  margin-top: 50rpx;
+  display: flex;
+  justify-content: space-between;
+}
+button {
+  font-size: 26rpx;
+  margin-left: 0;
+  margin-right: 0;
+  color: #4c5a5e;
+}
+.review-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.review-user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 100%;
+}
+.review-user-name {
+  font-size: 28rpx;
+  color: #4c5a5e;
+  margin-left: 20rpx;
+}
+.review-content {
+  font-size: 28rpx;
+  color: black;
+  margin-left: 100rpx;
+  margin-bottom: 100rpx;
+}
+.bottom-button-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  min-height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: flex-end;
+  flex-direction: column;
+}
+.bottom-button-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+.bottom-button {
+  z-index: 1;
+  width: 100%;
+  background-color: white;
+  line-height: 100rpx;
+  text-align: center;
+  border-bottom: 5rpx solid #ddd;
+  font-size: 34rpx;
+}
+.bottom-button:last-child {
+  border-top: 5rpx solid #ddd;
+}

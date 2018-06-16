@@ -36,6 +36,18 @@ var config = {
 
         // 获取评影评列表
         reviewList: `${host}/weapp/review/`,
+
+        // 获取评影评详情
+        reviewDetail: `${host}/weapp/review/detail/`,
+
+        // 首页影评
+        recommendation: `${host}/weapp/recommendation`,
+
+        // 添加到用户收藏列表
+        addCollection: `${host}/weapp/collection`,
+
+        // 获取用户收藏列表
+        collectionList: `${host}/weapp/collection`,
     }
 };
 

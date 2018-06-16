@@ -1,1 +1,43 @@
 /* pages/home/home.wxss */
+.button-wrapper {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+button {
+  flex: 1;
+  color: #4c5a5e;
+  font-size: 28rpx;
+  line-height: 100rpx;
+  text-align: center;
+}
+.recommendation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.poster {
+  width: 600rpx;
+  height: 800rpx;
+  margin: 50rpx auto;
+}
+.title {
+  font-weight: 600;
+  color: #4c5a5e;
+  margin-bottom: 30rpx;
+}
+.reviewer {
+  display: flex;
+}
+.reviewer-avatar {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 20rpx;
+  border-radius: 100%;
+}
+.reviewer-name {
+  color: #4c5a5e;
+  font-size: 28rpx;
+}

@@ -39,9 +39,7 @@
       <view class='review-content'>{{review}}</view>
       <view class='buttons'>
         <button bindtap='enterEditMode'>重新编辑</button>
-        <button
-          bindtap='publishReview'
-          data-id='{{movie.id}}'>
+        <button bindtap='publishReview'>
           发布影评
         </button>
       </view>

@@ -35,4 +35,12 @@ module.exports = {
       ctx.state.data = []
     }
   },
+
+  /**
+   * 获取影评详情
+   */
+  detail: async ctx => {
+    let id = ctx.params.id
+    ctx.state.data = (await DB.query('SELECT * FROM review WHERE id = ?', id))[0]
+  },
 }

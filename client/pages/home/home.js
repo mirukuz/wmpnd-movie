@@ -10,6 +10,7 @@ Page({
    */
   data: {
     userInfo: null,
+    recommendation: null,
   },
 
   onTapLogin() {
@@ -34,10 +35,40 @@ Page({
     })
   },
 
+  getRecommendation() {
+    wx.showLoading({
+      title: '加载中...',
+    })
+
+    qcloud.request({
+      url: config.service.recommendation,
+      success: result => {
+        wx.hideLoading()
+
+        let data = result.data
+        console.log(data);
+
+        if (!data.code) {
+          this.setData({
+            recommendation: data.data
+          })
+        } else {
+          setTimeout(() => {
+            wx.navigateBack()
+          }, 2000)
+        }
+      },
+      fail: () => {
+        wx.hideLoading()
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getRecommendation()
   },
 
   /**
