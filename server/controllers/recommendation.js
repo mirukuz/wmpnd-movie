@@ -4,7 +4,7 @@ module.exports = {
   /**
    * 获取随机影评推荐
    */
-  detail: async ctx => {
+  detail: async ctx => {  
     const reviewList = await DB.query('SELECT id, avatar, username, movie_id FROM review')
     if (reviewList !== []){
       const randomNumber = Math.floor(Math.random() * reviewList.length)

@@ -1,0 +1,56 @@
+/* pages/collection/collection.wxss */
+.page-heading {
+  color: #EEAC3F;
+  margin: 50rpx auto 20rpx auto;
+  font-size: 28rpx;
+  text-align: center;
+}
+.wrapper {
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.item {
+  background-color: #fff;
+  height: 250rpx;
+  width: 650rpx;
+  display: flex;
+  margin: 50rpx;
+  border: 1px solid #dedede;
+}
+.title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+.category {
+  font-size: 26rpx;
+}
+.poster {
+  flex: 0 0 160rpx;
+  width: 170rpx;
+  height: 250rpx;
+}
+.text-wrapper {
+  padding: 40rpx;
+}
+.review {
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+}
+.reviewer {
+  display: flex;
+  align-items: center;
+}
+.reviewer-avatar {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 10rpx;
+  border-radius: 100%;
+}
+.reviewer-name {
+  font-size: 28rpx;
+  color: #4c5a5e;
+}

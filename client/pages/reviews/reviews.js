@@ -22,9 +22,8 @@ Page({
 
   navToReviewDetail(e) {
     let reviewId = e.currentTarget.dataset.id;
-    let movie = this.data.movie;
     wx.navigateTo({
-      url: `/pages/reviewDetail/reviewDetail?id=${reviewId}&movieId=${movie.id}&title=${movie.title}&image=${movie.image}`,
+      url: `/pages/reviewDetail/reviewDetail?id=${reviewId}`,
     })
   },
 

@@ -41,6 +41,6 @@ module.exports = {
    */
   detail: async ctx => {
     let id = ctx.params.id
-    ctx.state.data = (await DB.query('SELECT * FROM review WHERE id = ?', id))[0]
+    ctx.state.data = (await DB.query('SELECT review.id, review.content, review.avatar, review.username, movies.image, movies.title, review.movie_id FROM review RIGHT JOIN movies ON review.movie_id = movies.id WHERE review.id = ?', id))[0]
   },
 }

@@ -7,7 +7,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    movie: null,
     reviewDetail: null,
   },
 
@@ -102,9 +101,9 @@ Page({
   },
 
   navToEditReview() {
-    let movie = this.data.movie
+    let reviewDetail = this.data.reviewDetail
     wx.navigateTo({
-      url: `/pages/editReview/editReview?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
+      url: `/pages/editReview/editReview?id=${reviewDetail.movie_id}&title=${reviewDetail.title}&image=${reviewDetail.image}`,
     })
   },
 
@@ -112,13 +111,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      movie: {
-        title: options.title,
-        image: options.image,
-        id: options.id
-      }
-    })
     this.getReviewDetail(options.id)
   },
 

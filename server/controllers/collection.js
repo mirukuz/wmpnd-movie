@@ -18,9 +18,9 @@ module.exports = {
    * 获取收藏列表
    * 
    */
-  // list: async ctx => {
-  //   let user = ctx.state.$wxInfo.userinfo.openId
+  list: async ctx => {
+    let user = ctx.state.$wxInfo.userinfo.openId
 
-  //   ctx.state.data = await DB.query('SELECT * FROM collection_user LEFT JOIN review ON collection_user.id = review.id WHERE collection_user.user = ?', [user])
-  // },
+    ctx.state.data = await DB.query('SELECT collection_user.id, review.avatar, review.content, review.username, review.movie_id, movies.title, movies.image FROM collection_user RIGHT JOIN review ON collection_user.id = review.id RIGHT JOIN movies ON review.movie_id = movies.id WHERE collection_user.user = ?', [user])
+  },
 }

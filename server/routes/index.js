@@ -52,6 +52,6 @@ router.get('/recommendation', controllers.recommendation.detail)
 router.put('/collection', validationMiddleware, controllers.collection.add)
 
 // 获取用户收藏列表
-// router.get('/collection', validationMiddleware, controllers.collection.list)
+router.get('/collection', validationMiddleware, controllers.collection.list)
 
 module.exports = router

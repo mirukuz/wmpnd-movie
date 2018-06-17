@@ -1,8 +1,7 @@
+// pages/collection/collection.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
 const app = getApp()
-
-// pages/home/home.js
 Page({
 
   /**
@@ -10,70 +9,45 @@ Page({
    */
   data: {
     userInfo: null,
-    recommendation: null,
+    collectionList: []
   },
 
-  onTapGetDetail(e) {
-    let id = this.data.recommendation.review.movie_id
-    wx.navigateTo({
-      url: '/pages/detail/detail?id=' + id,
-    })
-  },
-
-  navToReviewDetail() {
-    let reviewId = this.data.recommendation.review.id
-    wx.navigateTo({
-      url: `/pages/reviewDetail/reviewDetail?id=${reviewId}`,
-    })
-  },
-
-  onTapLogin() {
-    app.login({
-      success: ({ userInfo }) => {
-        this.setData({
-          userInfo
-        })
-      }
-    })
-  },
-
-  navToPopular() {
-    wx.navigateTo({
-      url: '/pages/popular/popular',
-    })
-  },
-
-  navToCollection() {
-    wx.navigateTo({
-      url: '/pages/collection/collection',
-    })
-  },
-
-  getRecommendation() {
+  getCollectionList() {
     wx.showLoading({
-      title: '加载中...',
+      title: '刷新收藏数据...',
     })
 
     qcloud.request({
-      url: config.service.recommendation,
+      url: config.service.collectionList,
+      login: true,
       success: result => {
         wx.hideLoading()
 
         let data = result.data
-        console.log(data);
 
         if (!data.code) {
+          let collectionList = data.data
+          collectionList.forEach(d =>
+            d.content.length > 40
+            ? d.content = `${d.content.substring(0, 40)}...`
+            : d.content)
           this.setData({
-            recommendation: data.data
+            collectionList: collectionList
           })
         } else {
-          setTimeout(() => {
-            wx.navigateBack()
-          }, 2000)
+          wx.showToast({
+            icon: 'none',
+            title: '数据刷新失败',
+          })
         }
       },
       fail: () => {
         wx.hideLoading()
+
+        wx.showToast({
+          icon: 'none',
+          title: '数据刷新失败',
+        })
       }
     })
   },
@@ -82,7 +56,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getRecommendation()
+
   },
 
   /**
@@ -101,6 +75,7 @@ Page({
         this.setData({
           userInfo
         })
+        this.getCollectionList()
       }
     })
   },

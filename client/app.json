@@ -3,7 +3,7 @@
     "pages/home/home",
     "pages/popular/popular",
     "pages/detail/detail",
-    "pages/myMovies/myMovies",
+    "pages/collection/collection",
     "pages/reviews/reviews",
     "pages/editReview/editReview",
     "pages/reviewDetail/reviewDetail"

@@ -5,10 +5,10 @@
   <view class='card'>
     <image
         class='poster'
-        src='{{movie.image}}'
+        src='{{reviewDetail.image}}'
       />
-    <view class='title' mode='widthFix'>
-      {{ movie.title }}
+    <view class='title'>
+      {{ reviewDetail.title }}
     </view>
     <view class='review-preview'>
       <view class='review-user'>
