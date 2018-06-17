@@ -8,6 +8,7 @@ Page({
    */
   data: {
     reviewDetail: null,
+    showBottomButton: false
   },
 
   addToCollection() {
@@ -62,8 +63,11 @@ Page({
 
   navToEditReview(e) {
     let id = e.currentTarget.dataset.id
+    let type = e.currentTarget.dataset.type
+    let reviewDetail = this.data.reviewDetail
+    console.log('type', type)
     wx.navigateTo({
-      url: '/pages/editReview/editReview?id=' + id,
+      url: `/pages/editReview/editReview?id=${id}&type=${type}&title=${reviewDetail.title}&image=${reviewDetail.image}`,
     })
   },
 
@@ -100,13 +104,6 @@ Page({
     })
   },
 
-  navToEditReview() {
-    let reviewDetail = this.data.reviewDetail
-    wx.navigateTo({
-      url: `/pages/editReview/editReview?id=${reviewDetail.movie_id}&title=${reviewDetail.title}&image=${reviewDetail.image}`,
-    })
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -132,7 +129,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+    this.setData({
+      showBottomButton: false
+    })
   },
 
   /**

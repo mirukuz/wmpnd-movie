@@ -9,16 +9,24 @@ Page({
    */
   data: {
     userInfo: null,
-    collectionList: []
+    collectionList: [],
+    publishedList: [],
   },
 
-  getCollectionList() {
+  navToReviewDetail(e) {
+    let reviewId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/reviewDetail/reviewDetail?id=${reviewId}`,
+    })
+  },
+
+  getMyList() {
     wx.showLoading({
       title: '刷新收藏数据...',
     })
 
     qcloud.request({
-      url: config.service.collectionList,
+      url: config.service.myList,
       login: true,
       success: result => {
         wx.hideLoading()
@@ -26,13 +34,19 @@ Page({
         let data = result.data
 
         if (!data.code) {
-          let collectionList = data.data
+          let collectionList = data.data.collection
+          let publishedList = data.data.published
           collectionList.forEach(d =>
+            d.content.length > 40
+              ? d.content = `${d.content.substring(0, 40)}...`
+              : d.content)
+          publishedList.forEach(d =>
             d.content.length > 40
             ? d.content = `${d.content.substring(0, 40)}...`
             : d.content)
           this.setData({
-            collectionList: collectionList
+            collectionList: collectionList,
+            publishedList: publishedList
           })
         } else {
           wx.showToast({
@@ -75,7 +89,7 @@ Page({
         this.setData({
           userInfo
         })
-        this.getCollectionList()
+        this.getMyList()
       }
     })
   },

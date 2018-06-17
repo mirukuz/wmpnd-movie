@@ -26,6 +26,7 @@
     class='bottom-button'
     bindtap='navToEditReview'
     data-id='{{movie.id}}'
+    data-type='text'
   >
     文字
   </view>
@@ -33,6 +34,7 @@
     class='bottom-button'
     bindtap='navToEditReview'
     data-id='{{movie.id}}'
+    data-type='voice'
   >
     音频
   </view>

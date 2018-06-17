@@ -47,7 +47,7 @@ var config = {
         addCollection: `${host}/weapp/collection`,
 
         // 获取用户收藏列表
-        collectionList: `${host}/weapp/collection`,
+        myList: `${host}/weapp/myList`,
     }
 };
 

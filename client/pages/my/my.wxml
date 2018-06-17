@@ -1,0 +1,53 @@
+<!--pages/collection/collection.wxml-->
+<view class='page-heading'>收藏的影评</view>
+<view
+  class='item'
+  wx:for='{{collectionList}}'
+  wx:key='{{item.id}}'
+  bindtap='navToReviewDetail'
+  data-id='{{item.id}}'
+>
+  <image
+    class='poster'
+    src='{{item.image}}'
+  />
+  <view class='text-wrapper'>
+    <view class='title'>{{ item.title }}</view>
+    <view class='review'>{{ item.content }}</view>
+    <view class='reviewer'>
+      <image
+        class='reviewer-avatar'
+        src='{{item.avatar}}'
+      />
+      <view class='reviewer-name'>
+        {{ item.username }}
+      </view>
+    </view>
+  </view>
+</view>
+<view class='page-heading'>发表的影评</view>
+<view
+  class='item'
+  wx:for='{{publishedList}}'
+  wx:key='{{item.id}}'
+  bindtap='navToReviewDetail'
+  data-id='{{item.id}}'
+>
+  <image
+    class='poster'
+    src='{{item.image}}'
+  />
+  <view class='text-wrapper'>
+    <view class='title'>{{ item.title }}</view>
+    <view class='review'>{{ item.content }}</view>
+    <view class='reviewer'>
+      <image
+        class='reviewer-avatar'
+        src='{{item.avatar}}'
+      />
+      <view class='reviewer-name'>
+        {{ item.username }}
+      </view>
+    </view>
+  </view>
+</view>

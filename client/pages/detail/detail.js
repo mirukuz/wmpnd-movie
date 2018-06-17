@@ -30,9 +30,10 @@ Page({
   },
   navToEditReview(e) {
     let id = e.currentTarget.dataset.id
+    let type = e.currentTarget.dataset.type
     let movie = this.data.movie
     wx.navigateTo({
-      url: `/pages/editReview/editReview?id=${id}&title=${movie.title}&image=${movie.image}`,
+      url: `/pages/editReview/editReview?id=${id}&title=${movie.title}&image=${movie.image}&type=${type}`,
     })
   },
 

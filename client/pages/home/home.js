@@ -45,7 +45,7 @@ Page({
 
   navToCollection() {
     wx.navigateTo({
-      url: '/pages/collection/collection',
+      url: '/pages/my/my',
     })
   },
 

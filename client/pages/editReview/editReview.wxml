@@ -14,17 +14,31 @@
       class='review-form'
       bindsubmit="bindFormSubmit">
       <textarea
+        wx:if="{{type=='text'}}"
         placeholder='输入你的影评内容...'
         name='review'
         value='{{review}}'
         class='review-form-textarea'
         auto-focus="true" />
-          <button
-            class='button-complete'
-            form-type="submit"
-          >
-            完成
-          </button>
+      <button
+        wx:if="{{type=='voice' && !filePath}}"
+        bindtouchstart="touchdown"
+        bindtouchend="touchup"
+      >
+        {{ isSpeaking? '录音中...' : '按住录音'}}
+      </button>
+      <button
+        wx:if="{{type=='voice' && !!filePath}}"
+        bindtap='playRecording'
+      >
+        播放录音
+      </button>
+      <button
+        class='button-complete'
+        form-type="submit"
+      >
+        完成
+      </button>
     </form>
     <view class='review-preview' wx:if='{{ready}}'>
       <view class='review-user'>
@@ -36,7 +50,19 @@
           {{ userInfo.nickName }}的影评
         </view>
       </view>
-      <view class='review-content'>{{review}}</view>
+      <view
+        class='review-content'
+        wx:if="{{type=='text'}}"
+      >
+        {{review}}
+      </view>
+      <button
+        class='review-content'
+        wx:if="{{type=='voice'}}"
+        bindtap='playRecording'
+      >
+        播放录音
+      </button>
       <view class='buttons'>
         <button bindtap='enterEditMode'>重新编辑</button>
         <button bindtap='publishReview'>

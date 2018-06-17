@@ -1,7 +1,11 @@
 // pages/editReview/editReview.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
+const recorderManager = wx.getRecorderManager()
+const innerAudioContext = wx.createInnerAudioContext()
 const app = getApp()
+let tempFilePath;
+
 Page({
 
   /**
@@ -12,6 +16,92 @@ Page({
     review: '',
     ready: false,
     userInfo: null,
+    type: 'text',
+    filePath: null,
+    isSpeaking: false,
+  },
+
+  uploadRecord() {
+    let recordPath = this.data.filePath
+    if (recordPath) {
+      wx.uploadFile({
+        url: config.service.uploadUrl,
+        filePath: recordPath,
+        header: {
+          'content-type': 'multipart/form-data'
+        },
+        name: 'file',
+        success: res => {
+          let data = JSON.parse(res.data)
+          console.log('recordPath', data)
+          // if (!data.code) {
+          //   console.log(data)
+          // }
+        }
+      })
+    }
+  },
+
+  //开始录音的时候
+  touchdown () {
+    this.setData({
+      isSpeaking: true
+    })
+    const options = {
+      duration: 10000,//指定录音的时长，单位 ms
+      sampleRate: 16000,//采样率
+      numberOfChannels: 1,//录音通道数
+      encodeBitRate: 96000,//编码码率
+      format: 'mp3',//音频格式，有效值 aac/mp3
+      frameSize: 50,//指定帧大小，单位 KB
+    }
+    //开始录音
+    recorderManager.start(options);
+    recorderManager.onStart(() => {
+      console.log('录音开始')
+    });
+
+    setTimeout(() => {
+      //结束录音  
+      this.stopRecording()
+    }, 10000)
+    //错误回调
+    recorderManager.onError((res) => {
+      console.log(res);
+    })
+  },
+
+  touchup: function () {
+    console.log("手指抬起了...")
+    this.stopRecording()
+  },
+  //停止录音
+  stopRecording () {
+    this.setData({
+      isSpeaking: false
+    })
+    recorderManager.stop();
+    recorderManager.onStop((res) => {
+      console.log('停止录音', res.tempFilePath)
+      const { tempFilePath } = res
+      this.setData({
+        filePath: tempFilePath,
+      })
+    })
+  },
+  //播放声音
+  playRecording () {
+
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = this.data.filePath,
+      innerAudioContext.onPlay(() => {
+        console.log('开始播放', innerAudioContext.src )
+      })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+
   },
 
   enterEditMode() {
@@ -22,11 +112,11 @@ Page({
 
   publishReview(event) {
     let content = this.data.review
-    if (!content) return
 
     wx.showLoading({
       title: '正在发表影评'
     })
+    // this.uploadRecord()
 
     qcloud.request({
       url: config.service.addReview,
@@ -73,10 +163,16 @@ Page({
 
   bindFormSubmit: function (e) {
     const review = e.detail.value.review
-    this.setData({
-      review: review,
-      ready: true
-    })
+    if (review) {
+      this.setData({
+        review: review,
+        ready: true
+      })
+    } else {
+      this.setData({
+        ready: true
+      })
+    }
   },
 
   /**
@@ -88,7 +184,8 @@ Page({
         title: options.title,
         image: options.image,
         id: options.id,
-      }
+      },
+      type: options.type
     })
     app.checkSession({
       success: ({ userInfo }) => {

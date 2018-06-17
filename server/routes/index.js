@@ -51,7 +51,7 @@ router.get('/recommendation', controllers.recommendation.detail)
 // 添加到用户收藏列表
 router.put('/collection', validationMiddleware, controllers.collection.add)
 
-// 获取用户收藏列表
-router.get('/collection', validationMiddleware, controllers.collection.list)
+// 获取用户的收藏和发表过的影评
+router.get('/myList', validationMiddleware, controllers.myList.list)
 
 module.exports = router
