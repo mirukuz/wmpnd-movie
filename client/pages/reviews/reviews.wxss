@@ -37,3 +37,12 @@ button {
   text-align: center;
   border-radius: 0;
 }
+.voice {
+  background-color:#eee;
+  border-radius: 10rpx;
+  border: 1px solid #dedede;
+  margin-top: 20rpx;
+  color: #4c5a5e;
+  font-size: 28rpx;
+  padding:8rpx 16rpx;
+}

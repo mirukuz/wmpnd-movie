@@ -11,13 +11,11 @@ module.exports = {
     let avatar = ctx.state.$wxInfo.userinfo.avatarUrl
 
     let movieId = ctx.request.body.movie_id
+    let record = ctx.request.body.record || null
     let content = ctx.request.body.content || null
 
-    let voice = ctx.request.body.voice || null
-
-
     if (!isNaN(movieId)) {
-      await DB.query('INSERT INTO review(user, username, avatar, content, voice, movie_id) VALUES (?, ?, ?, ?, ?, ?)', [user, username, avatar, content, voice, movieId])
+      await DB.query('INSERT INTO review(user, username, avatar, content, voice, movie_id) VALUES (?, ?, ?, ?, ?, ?)', [user, username, avatar, content, record, movieId])
     }
 
     ctx.state.data = {}
@@ -41,6 +39,6 @@ module.exports = {
    */
   detail: async ctx => {
     let id = ctx.params.id
-    ctx.state.data = (await DB.query('SELECT review.id, review.content, review.avatar, review.username, movies.image, movies.title, review.movie_id FROM review RIGHT JOIN movies ON review.movie_id = movies.id WHERE review.id = ?', id))[0]
+    ctx.state.data = (await DB.query('SELECT review.id, review.content, review.voice, review.avatar, review.username, movies.image, movies.title, review.movie_id FROM review RIGHT JOIN movies ON review.movie_id = movies.id WHERE review.id = ?', id))[0]
   },
 }

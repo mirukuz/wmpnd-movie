@@ -15,7 +15,13 @@
       {{ item.username }}的影评
     </view>
   </view>
-  <view class='content'>{{item.content}}</view>
+  <view class='content' wx:if='{{item.content}}'>{{item.content}}</view>
+  <view
+    wx:if='{{item.voice}}'
+    class='voice'
+  >
+    播放声音...
+  </view>
 </view>
 <button bindtap='backToHome'>
     回到首页

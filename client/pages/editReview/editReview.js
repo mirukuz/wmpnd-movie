@@ -21,24 +21,28 @@ Page({
     isSpeaking: false,
   },
 
-  uploadRecord() {
+  uploadRecord(cb) {
     let recordPath = this.data.filePath
+    let record
     if (recordPath) {
+      console.log('开始上传录音')
       wx.uploadFile({
         url: config.service.uploadUrl,
         filePath: recordPath,
-        header: {
-          'content-type': 'multipart/form-data'
-        },
         name: 'file',
         success: res => {
           let data = JSON.parse(res.data)
-          console.log('recordPath', data)
-          // if (!data.code) {
-          //   console.log(data)
-          // }
+
+          if (!data.code) {
+            record = data.data.imgUrl
+          }
+          console.log('返回来的录音存储地址', record)
+
+          cb && cb(record)
         }
       })
+    } else {
+      cb && cb(record)
     }
   },
 
@@ -101,7 +105,6 @@ Page({
       console.log(res.errMsg)
       console.log(res.errCode)
     })
-
   },
 
   enterEditMode() {
@@ -116,48 +119,51 @@ Page({
     wx.showLoading({
       title: '正在发表影评'
     })
-    // this.uploadRecord()
 
-    qcloud.request({
-      url: config.service.addReview,
-      login: true,
-      method: 'POST',
-      data: {
-        content,
-        movie_id: this.data.movie.id
-      },
-      success: result => {
-        wx.hideLoading()
+    this.uploadRecord(record => {
 
-        let data = result.data
-        console.log('data',data)
+      qcloud.request({
+        url: config.service.addReview,
+        login: true,
+        method: 'POST',
+        data: {
+          content,
+          record: record,
+          movie_id: this.data.movie.id
+        },
+        success: result => {
+          wx.hideLoading()
 
-        if (!data.code) {
-          wx.showToast({
-            title: '发表影评成功'
-          })
+          let data = result.data
+          console.log('data',data)
 
-          setTimeout(() => {
-            let movie = this.data.movie;
-            wx.navigateTo({
-              url: `/pages/reviews/reviews?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
+          if (!data.code) {
+            wx.showToast({
+              title: '发表影评成功'
             })
-          }, 1500)
-        } else {
+
+            setTimeout(() => {
+              let movie = this.data.movie;
+              wx.navigateTo({
+                url: `/pages/reviews/reviews?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
+              })
+            }, 1500)
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '发表影评失败'
+            })
+          }
+        },
+        fail: () => {
+          wx.hideLoading()
+
           wx.showToast({
             icon: 'none',
-            title: '发表影评失败'
+            title: '发表评论失败'
           })
         }
-      },
-      fail: () => {
-        wx.hideLoading()
-
-        wx.showToast({
-          icon: 'none',
-          title: '发表评论失败'
-        })
-      }
+      })
     })
   },
 

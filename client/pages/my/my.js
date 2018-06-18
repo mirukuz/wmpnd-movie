@@ -37,11 +37,11 @@ Page({
           let collectionList = data.data.collection
           let publishedList = data.data.published
           collectionList.forEach(d =>
-            d.content.length > 40
+            d.content && d.content.length > 40
               ? d.content = `${d.content.substring(0, 40)}...`
               : d.content)
           publishedList.forEach(d =>
-            d.content.length > 40
+            d.content && d.content.length > 40
             ? d.content = `${d.content.substring(0, 40)}...`
             : d.content)
           this.setData({

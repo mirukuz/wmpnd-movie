@@ -33,6 +33,7 @@ Page({
       success: result => {
         let data = result.data
         if (!data.code) {
+          console.log('reviewList !!!', data.data)
           this.setData({
             reviewList: data.data.map(item => {
               let itemDate = new Date(item.create_time)

@@ -36,9 +36,18 @@
 .text-wrapper {
   padding: 40rpx;
 }
-.review {
+.review-content {
   font-size: 28rpx;
   margin-bottom: 10rpx;
+}
+.review-voice {
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+  background-color:#eee;
+  border-radius: 10rpx;
+  border: 1px solid #dedede;
+  color: #4c5a5e;
+  padding:8rpx 16rpx;
 }
 .reviewer {
   display: flex;

@@ -55,6 +55,16 @@ button {
   margin-left: 100rpx;
   margin-bottom: 100rpx;
 }
+.review-voice {
+  background-color:#eee;
+  border-radius: 10rpx;
+  border: 1px solid #dedede;
+  margin-left: 100rpx;
+  margin-bottom: 100rpx;
+  color: #4c5a5e;
+  font-size: 28rpx;
+  padding:8rpx 16rpx;
+}
 .bottom-button-wrapper {
   position: fixed;
   top: 0;

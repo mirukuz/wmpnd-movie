@@ -20,7 +20,20 @@
           {{ reviewDetail.username }}的影评
         </view>
       </view>
-      <view class='review-content'>{{reviewDetail.content}}</view>
+      <view
+        class='review-content'
+        wx:if='{{reviewDetail.content}}'
+      >
+        {{reviewDetail.content}}
+      </view>
+      <view
+        bindtap='playRecording'
+        class='review-voice'
+        wx:if='{{reviewDetail.voice}}'
+        data-path='{{reviewDetail.voice}}'
+      >
+        播放录音
+      </view>
       <view class='buttons'>
         <button bindtap='addToCollection'>
           收藏影评
