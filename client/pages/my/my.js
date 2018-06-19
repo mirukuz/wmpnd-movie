@@ -1,6 +1,7 @@
 // pages/collection/collection.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
+const innerAudioContext = wx.createInnerAudioContext()
 const app = getApp()
 Page({
 
@@ -17,6 +18,21 @@ Page({
     let reviewId = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: `/pages/reviewDetail/reviewDetail?id=${reviewId}`,
+    })
+  },
+
+  //播放声音
+  playRecording(e) {
+    let path = e.currentTarget.dataset.path
+
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = path,
+      innerAudioContext.onPlay(() => {
+        console.log('开始播放', innerAudioContext.src)
+      })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
     })
   },
 

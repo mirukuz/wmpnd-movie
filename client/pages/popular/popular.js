@@ -1,8 +1,7 @@
+// pages/popular/popular.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
-const app = getApp()
 
-// pages/popular/popular.js
 Page({
 
   /**
@@ -12,6 +11,9 @@ Page({
     movieList: []
   },
 
+  /**
+   * 点击获取影片详情
+   */
   onTapGetDetail(e) {
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
@@ -19,7 +21,10 @@ Page({
     })
   },
 
-  getMovieList() {
+  /**
+   * 获取热门影片列表
+   */
+  getMovieList(callback) {
     wx.showLoading({
       title: '电影数据加载中...',
     })
@@ -31,7 +36,6 @@ Page({
 
         let data = result.data
         if (!data.code) {
-          console.log('data', data.data)
           this.setData({
             movieList: data.data
           })
@@ -49,6 +53,9 @@ Page({
           icon: 'none',
           title: '电影数据加载错误',
         })
+      },
+      complete: () => {
+        callback && callback()
       }
     })
   },
@@ -61,51 +68,11 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    this.getMovieList(() => {
+      wx.stopPullDownRefresh()
+    })
   }
 })

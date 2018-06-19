@@ -13,6 +13,9 @@ Page({
     recommendation: null,
   },
 
+  /**
+   * 点击电影海报跳转电影详情
+   */
   onTapGetDetail(e) {
     let id = this.data.recommendation.review.movie_id
     wx.navigateTo({
@@ -20,6 +23,9 @@ Page({
     })
   },
 
+  /**
+   * 点击推荐影评跳转影评详情
+   */ 
   navToReviewDetail() {
     let reviewId = this.data.recommendation.review.id
     wx.navigateTo({
@@ -27,6 +33,9 @@ Page({
     })
   },
 
+  /**
+   * 用户登录
+   */
   onTapLogin() {
     app.login({
       success: ({ userInfo }) => {
@@ -37,19 +46,28 @@ Page({
     })
   },
 
+  /**
+   * 跳转热门影片
+   */
   navToPopular() {
     wx.navigateTo({
       url: '/pages/popular/popular',
     })
   },
 
-  navToCollection() {
+  /**
+   * 跳转我的列表
+   */
+  navToMyList() {
     wx.navigateTo({
       url: '/pages/my/my',
     })
   },
 
-  getRecommendation() {
+  /**
+   * 获取影片推荐
+   */
+  getRecommendation(callback) {
     wx.showLoading({
       title: '加载中...',
     })
@@ -74,6 +92,9 @@ Page({
       },
       fail: () => {
         wx.hideLoading()
+      },
+      complete: () => {
+        callback && callback()
       }
     })
   },
@@ -106,37 +127,11 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    this.getRecommendation(() => {
+      wx.stopPullDownRefresh()
+    })
   }
 })

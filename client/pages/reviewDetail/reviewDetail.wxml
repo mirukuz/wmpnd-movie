@@ -28,11 +28,20 @@
       </view>
       <view
         bindtap='playRecording'
-        class='review-voice'
         wx:if='{{reviewDetail.voice}}'
         data-path='{{reviewDetail.voice}}'
       >
-        播放录音
+        <view
+          class='review-voice-playing'
+          wx:if='{{isPlaying == true}}'>
+          播放中...
+        </view>
+        <view
+          class='review-voice'
+          wx:else
+        >
+          点击播放语音影评
+        </view>
       </view>
       <view class='buttons'>
         <button bindtap='addToCollection'>

@@ -41,3 +41,9 @@ button {
   color: #4c5a5e;
   font-size: 28rpx;
 }
+.unlogin-tips {
+  color: #4c5a5e;
+  font-size: 28rpx;
+  margin: 20rpx auto;
+  text-align: center;
+}

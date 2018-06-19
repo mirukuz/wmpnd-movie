@@ -7,6 +7,9 @@
 .review:first-child {
   margin-top: 20rpx;
 }
+.review:last-child {
+  margin-bottom: 110rpx;
+}
 .user {
   display: flex;
   align-items: center;
@@ -37,12 +40,23 @@ button {
   text-align: center;
   border-radius: 0;
 }
-.voice {
-  background-color:#eee;
+.voice, .voice-playing {
   border-radius: 10rpx;
   border: 1px solid #dedede;
   margin-top: 20rpx;
   color: #4c5a5e;
   font-size: 28rpx;
   padding:8rpx 16rpx;
+}
+.voice {
+  background-color:#eee;
+}
+.voice-playing {
+  background-color:#dedede;
+}
+.empty-list {
+  color: #4c5a5e;
+  margin: 20rpx auto;
+  font-size: 28rpx;
+  text-align: center;
 }

@@ -1,26 +1,46 @@
 <!--pages/reviews/reviews.wxml-->
-<view
-  wx:for='{{reviewList}}'
-  wx:key='{{item.key}}'
-  class='review'
-  bindtap='navToReviewDetail'
-  data-id='{{item.id}}'
->
-  <view class='user'>
-    <image
-      class='user-avatar'
-      src='{{item.avatar}}'
-    />
-    <view class='user-name'>
-      {{ item.username }}的影评
+<view>
+  <view
+    wx:if='{{reviewList.length > 0}}'
+    wx:for='{{reviewList}}'
+    wx:key='{{item.key}}'
+    class='review'
+    bindtap='navToReviewDetail'
+    data-id='{{item.id}}'
+  >
+    <view class='user'>
+      <image
+        class='user-avatar'
+        src='{{item.avatar}}'
+      />
+      <view class='user-name'>
+        {{ item.username }}的影评
+      </view>
+    </view>
+    <view class='content' wx:if='{{item.content}}'>{{item.content}}</view>
+    <view
+      wx:if='{{item.voice}}'
+      catchtap='playRecording'
+      data-path='{{item.voice}}'
+      data-id='{{item.id}}'
+    >
+      <view
+        class='voice-playing'
+        wx:if='{{isPlaying == item.id}}'>
+        播放中...
+      </view>
+      <view
+        class='voice'
+        wx:else
+      >
+        点击播放语音影评
+      </view>
     </view>
   </view>
-  <view class='content' wx:if='{{item.content}}'>{{item.content}}</view>
   <view
-    wx:if='{{item.voice}}'
-    class='voice'
-  >
-    播放声音...
+    class='empty-list'
+    wx:if='{{reviewList.length == 0}}'>
+    暂无影评，快来做第一个吧！
   </view>
 </view>
 <button bindtap='backToHome'>

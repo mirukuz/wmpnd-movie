@@ -1,6 +1,7 @@
+// pages/detail/detail.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
-// pages/detail/detail.js
+
 Page({
 
   /**
@@ -11,32 +12,49 @@ Page({
     showBottomButton: false
   },
 
+  /**
+   * 显示添加影评选项层
+   */
   showModal () {
     this.setData({
       showBottomButton: true
     })
   },
 
+  /**
+   * 隐藏添加影评选项层
+   */
   hideModal() {
     this.setData({
       showBottomButton: false
     })
   },
+
+  /**
+   * 跳转影评列表页面
+   */
   navToReviewList() {
     let movie = this.data.movie;
     wx.navigateTo({
       url: `/pages/reviews/reviews?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
     })
   },
+
+  /**
+   * 跳转编辑影评页面
+   */
   navToEditReview(e) {
     let id = e.currentTarget.dataset.id
-    let type = e.currentTarget.dataset.type
+    let type = e.currentTarget.dataset.type // 传入影评类型参数 content | voice， 分别跳转文字或者音频编辑页面
     let movie = this.data.movie
     wx.navigateTo({
       url: `/pages/editReview/editReview?id=${id}&title=${movie.title}&image=${movie.image}&type=${type}`,
     })
   },
 
+  /**
+   * 显示添加影评选项层
+   */
   getMovie(id) {
     wx.showLoading({
       title: '电影数据加载中...',
@@ -48,7 +66,6 @@ Page({
         wx.hideLoading()
 
         let data = result.data
-        console.log(data);
 
         if (!data.code) {
           this.setData({
@@ -78,52 +95,11 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
+   * 生命周期函数--监听页面隐藏，这样从上个页面返回时不在影评编辑选项层的状态
    */
   onHide: function () {
     this.setData({
       showBottomButton: false
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

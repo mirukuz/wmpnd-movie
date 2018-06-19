@@ -55,8 +55,7 @@ button {
   margin-left: 100rpx;
   margin-bottom: 100rpx;
 }
-.review-voice {
-  background-color:#eee;
+.review-voice, .review-voice-playing {
   border-radius: 10rpx;
   border: 1px solid #dedede;
   margin-left: 100rpx;
@@ -64,6 +63,12 @@ button {
   color: #4c5a5e;
   font-size: 28rpx;
   padding:8rpx 16rpx;
+}
+.review-voice {
+  background-color:#eee;
+}
+.review-voice-playing {
+  background-color:#dedede;
 }
 .bottom-button-wrapper {
   position: fixed;

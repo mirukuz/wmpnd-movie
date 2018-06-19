@@ -1,6 +1,7 @@
 // pages/reviews/reviews.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
+const innerAudioContext = wx.createInnerAudioContext()
 const _ = require('../../utils/util')
 const app = getApp()
 
@@ -12,6 +13,7 @@ Page({
   data: {
     movie: {},
     reviewList: [],
+    isPlaying: null
   },
 
   backToHome() {
@@ -20,6 +22,38 @@ Page({
     })
   },
 
+  /**
+   * 如果影评是录音，点击播放录音
+   */
+  playRecording(e) {
+    let id = e.currentTarget.dataset.id
+    let path = e.currentTarget.dataset.path
+
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = path,
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        isPlaying: id
+      })
+    })
+    innerAudioContext.onEnded(() => {
+      this.setData({
+        isPlaying: null
+      })
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+      wx.showToast({
+        icon: 'none',
+        title: '影评播放失败',
+      })
+    })
+  },
+
+  /**
+   * 跳转影评详情页面
+   */
   navToReviewDetail(e) {
     let reviewId = e.currentTarget.dataset.id;
     wx.navigateTo({
@@ -27,86 +61,53 @@ Page({
     })
   },
 
-  getReviewList(id) {
+  /**
+   * 获取影评列表
+   */
+  getReviewList(callback) {
     qcloud.request({
-      url: config.service.reviewList + id,
+      url: config.service.reviewList + this.data.movie.id,
       success: result => {
         let data = result.data
         if (!data.code) {
-          console.log('reviewList !!!', data.data)
           this.setData({
-            reviewList: data.data.map(item => {
-              let itemDate = new Date(item.create_time)
-              item.createTime = _.formatTime(itemDate)
-              // item.images = item.images ? item.images.split(';;') : []
-              return item
-            })
+            reviewList: data.data
           })
         }
       },
+      fail: () => {
+        wx.hideLoading()
+
+        wx.showToast({
+          icon: 'none',
+          title: '影评列表加载错误',
+        })
+      },
+      complete: () => {
+        callback && callback()
+      }
     })
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getReviewList(options.id)
-    console.log('option',options)
     this.setData({
       movie: {
         id: options.id,
         title: options.title,
         image: options.image
       }
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
+    }, () => this.getReviewList())
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    this.getReviewList(() => {
+      wx.stopPullDownRefresh()
+    })
   }
 })

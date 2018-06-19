@@ -11,21 +11,35 @@ Page({
    */
   data: {
     reviewDetail: null,
-    showBottomButton: false
+    showBottomButton: false,
+    isPlaying: false
   },
 
-  //播放声音
+  /**
+   * 播放语音影评
+   */
   playRecording(e) {
     let path = e.currentTarget.dataset.path
 
     innerAudioContext.autoplay = true
     innerAudioContext.src = path,
-      innerAudioContext.onPlay(() => {
-        console.log('开始播放', innerAudioContext.src)
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        isPlaying: true
       })
+    })
+    innerAudioContext.onEnded(() => {
+      this.setData({
+        isPlaying: false
+      })
+    })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
+      wx.showToast({
+        icon: 'none',
+        title: '影评播放失败',
+      })
     })
   },
 
@@ -67,18 +81,27 @@ Page({
 
   },
 
+  /**
+   * 显示添加影评选项层
+   */
   showModal() {
     this.setData({
       showBottomButton: true
     })
   },
 
+  /**
+   * 隐藏添加影评选项层
+   */
   hideModal() {
     this.setData({
       showBottomButton: false
     })
   },
 
+  /**
+   * 跳转到影评编辑页面
+   */
   navToEditReview(e) {
     let id = e.currentTarget.dataset.id
     let type = e.currentTarget.dataset.type
@@ -89,6 +112,9 @@ Page({
     })
   },
 
+  /**
+   * 获取影片详情
+   */
   getReviewDetail(id) {
     wx.showLoading({
       title: '影评详情加载中...',
@@ -100,7 +126,6 @@ Page({
         wx.hideLoading()
 
         let data = result.data
-        console.log(data);
 
         if (!data.code) {
           this.setData({
@@ -130,53 +155,11 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
     this.setData({
       showBottomButton: false
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

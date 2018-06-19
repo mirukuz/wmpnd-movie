@@ -22,6 +22,8 @@
     <view
       class='review-voice'
       wx:if='{{item.voice}}'
+      catchtap='playRecording'
+      data-path='{{item.voice}}'
     >
       播放录音
     </view>
