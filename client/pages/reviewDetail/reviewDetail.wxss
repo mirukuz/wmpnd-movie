@@ -1,7 +1,7 @@
 /* pages/reviewDetail/reviewDetail.wxss */
 .wrapper {
   padding: 150rpx 50rpx 50rpx;
-  
+  margin-bottom: 100rpx;
 }
 .poster {
   position: absolute;
@@ -102,4 +102,15 @@ button {
 }
 .bottom-button:last-child {
   border-top: 5rpx solid #ddd;
+}
+.back-home-button {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #4c5a5e;
+  font-size: 28rpx;
+  line-height: 100rpx;
+  text-align: center;
+  border-radius: 0;
 }

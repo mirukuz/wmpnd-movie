@@ -135,9 +135,7 @@ Page({
       url: config.service.myReview + movieId,
       login: true,
       success: result => {
-
         let data = result.data
-
         if (!data.code) {
           this.setData({
             myReview: data.data && data.data[0]
@@ -182,6 +180,13 @@ Page({
           wx.navigateBack()
         }, 2000)
       }
+    })
+  },
+
+  // 返回首页
+  backToHome() {
+    wx.navigateTo({
+      url: '/pages/home/home',
     })
   },
 

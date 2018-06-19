@@ -92,3 +92,9 @@
     取消
   </view>
 </view>
+<button
+  class='back-home-button'
+  bindtap='backToHome'
+>
+    回到首页
+</button>
