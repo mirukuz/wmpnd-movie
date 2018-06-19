@@ -60,7 +60,7 @@ Page({
    */
   getMyList(callback) {
     wx.showLoading({
-      title: '刷新收藏数据...',
+      title: '刷新我的列表...',
     })
 
     qcloud.request({
@@ -74,14 +74,14 @@ Page({
         if (!data.code) {
           let collectionList = data.data.collection
           let publishedList = data.data.published
-          // 截取影评前40个字符
+          // 截取影评前30个字符
           collectionList.forEach(d =>
-            d.content && d.content.length > 40
-              ? d.content = `${d.content.substring(0, 40)}...`
+            d.content && d.content.length > 25
+              ? d.content = `${d.content.substring(0, 25)}...`
               : d.content)
           publishedList.forEach(d =>
-            d.content && d.content.length > 40
-            ? d.content = `${d.content.substring(0, 40)}...`
+            d.content && d.content.length > 25
+            ? d.content = `${d.content.substring(0, 25)}...`
             : d.content)
           
           this.setData({

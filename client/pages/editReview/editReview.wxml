@@ -12,7 +12,7 @@
     <form
       wx:if='{{!ready}}'
       class='review-form'
-      bindsubmit="bindFormSubmit">
+      bindsubmit="enterPreviewMode">
       <textarea
         wx:if="{{type=='text'}}"
         placeholder='输入你的影评内容...'
@@ -31,7 +31,7 @@
         wx:if="{{type=='voice' && !!filePath}}"
         bindtap='playRecording'
       >
-        播放录音
+        {{ isPlaying ? '播放中...' : '点击播放影评'}}
       </button>
       <button
         class='button-complete'
@@ -61,7 +61,7 @@
         wx:if="{{type=='voice'}}"
         bindtap='playRecording'
       >
-        播放录音
+        {{ isPlaying ? '播放中...' : '点击播放影评'}}
       </button>
       <view class='buttons'>
         <button bindtap='enterEditMode'>重新编辑</button>

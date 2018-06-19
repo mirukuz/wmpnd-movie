@@ -106,9 +106,9 @@ Page({
    * 跳转到影评编辑页面
    */
   navToEditReview(e) {
-    let id = e.currentTarget.dataset.id
-    let type = e.currentTarget.dataset.type
     let reviewDetail = this.data.reviewDetail
+    let id = e.currentTarget.dataset.id || reviewDetail.movie_id
+    let type = e.currentTarget.dataset.type
     console.log('type', type)
     wx.navigateTo({
       url: `/pages/editReview/editReview?id=${id}&type=${type}&title=${reviewDetail.title}&image=${reviewDetail.image}`,

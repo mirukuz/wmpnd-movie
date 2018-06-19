@@ -18,13 +18,16 @@ Page({
     type: 'text',
     filePath: null, // 录音暂存地址
     isSpeaking: false,
+    isPlaying: false
   },
 
   uploadRecord(cb) {
     let recordPath = this.data.filePath
     let record
     if (recordPath) {
-      console.log('开始上传录音')
+      wx.showLoading({
+        title: '正在上传录音'
+      })
       wx.uploadFile({
         url: config.service.uploadUrl,
         filePath: recordPath,
@@ -33,10 +36,15 @@ Page({
           let data = JSON.parse(res.data)
 
           if (!data.code) {
+            wx.hideLoading();
             record = data.data.imgUrl
           }
           console.log('返回来的录音存储地址', record)
 
+          wx.showLoading({
+            title: '正在发表影评'
+          })
+          // 回调韩式返回录音地址
           cb && cb(record)
         }
       })
@@ -45,7 +53,9 @@ Page({
     }
   },
 
-  //开始录音的时候
+  /**
+   * 按住开始录音
+   */
   touchdown () {
     this.setData({
       isSpeaking: true
@@ -68,16 +78,20 @@ Page({
       //结束录音  
       this.stopRecording()
     }, 10000)
+
     //错误回调
     recorderManager.onError((res) => {
       console.log(res);
     })
   },
 
+  /**
+   * 松开停止录音
+   */
   touchup: function () {
-    console.log("手指抬起了...")
     this.stopRecording()
   },
+  
   //停止录音
   stopRecording () {
     this.setData({
@@ -88,36 +102,57 @@ Page({
       console.log('停止录音', res.tempFilePath)
       const { tempFilePath } = res
       this.setData({
-        filePath: tempFilePath,
+        filePath: tempFilePath, // 存储在文件暂存地址
       })
     })
   },
-  //播放声音
+
+  /**
+   * 播放录音
+   */
   playRecording () {
 
     innerAudioContext.autoplay = true
     innerAudioContext.src = this.data.filePath,
-      innerAudioContext.onPlay(() => {
-        console.log('开始播放', innerAudioContext.src )
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        isPlaying: true
       })
+    })
+    innerAudioContext.onEnded(() => {
+      this.setData({
+        isPlaying: false
+      })
+    })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
+      wx.showToast({
+        icon: 'none',
+        title: '影评播放失败'
+      })
     })
   },
 
+  /**
+   * 进入编辑模式
+   */
   enterEditMode() {
     this.setData({
       ready: false
     })
   },
 
+  /**
+   * 发表影评
+   */
   publishReview(event) {
     let content = this.data.review
-
-    wx.showLoading({
-      title: '正在发表影评'
-    })
+    if (content) {
+      wx.showLoading({
+        title: '正在发表影评'
+      })
+    }
 
     this.uploadRecord(record => {
 
@@ -159,14 +194,17 @@ Page({
 
           wx.showToast({
             icon: 'none',
-            title: '发表评论失败'
+            title: '发表影评失败'
           })
         }
       })
     })
   },
 
-  bindFormSubmit: function (e) {
+  /**
+   * 进入预览模式
+   */
+  enterPreviewMode: function (e) {
     const review = e.detail.value.review
     if (review) {
       this.setData({
@@ -184,6 +222,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log('options', options)
     this.setData({
       movie: {
         title: options.title,
@@ -200,54 +239,5 @@ Page({
         })
       }
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })
