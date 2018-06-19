@@ -95,6 +95,7 @@
 <button
   class='back-home-button'
   bindtap='backToHome'
+  wx:if='{{comeFromMylist}}'
 >
     回到首页
 </button>

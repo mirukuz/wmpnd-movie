@@ -14,7 +14,8 @@ Page({
     showBottomButton: false,
     isPlaying: false,
     myReview: null,
-    disableActions: false
+    disableActions: false,
+    comeFromMylist: false,
   },
 
   /**
@@ -195,6 +196,9 @@ Page({
    */
   onLoad: function (options) {
     this.getReviewDetail(options.id)
+    this.setData({
+      comeFromMylist: options.myList || false
+    })
   },
 
   /**
@@ -204,6 +208,7 @@ Page({
     this.setData({
       showBottomButton: false,
       disableActions: false,
+      comeFromMylist: false,
     })
   }
 })

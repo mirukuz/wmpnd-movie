@@ -22,7 +22,7 @@ Page({
   navToReviewDetail(e) {
     let reviewId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/reviewDetail/reviewDetail?id=${reviewId}`,
+      url: `/pages/reviewDetail/reviewDetail?id=${reviewId}&myList=true`,
     })
   },
 
