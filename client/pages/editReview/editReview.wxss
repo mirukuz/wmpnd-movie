@@ -1,5 +1,4 @@
 /* pages/editReview/editReview.wxss */
-/* pages/detail/detail.wxss */
 .wrapper {
   padding: 150rpx 50rpx 50rpx;
   

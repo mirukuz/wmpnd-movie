@@ -178,7 +178,8 @@ Page({
 
             setTimeout(() => {
               let movie = this.data.movie;
-              wx.navigateTo({
+              // 跳转影评列表界面
+              wx.redirectTo({
                 url: `/pages/reviews/reviews?id=${movie.id}&title=${movie.title}&image=${movie.image}`,
               })
             }, 1500)
@@ -238,6 +239,16 @@ Page({
           userInfo
         })
       }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏，这样从上个页面返回清楚上次的编辑信息
+   */
+  onHide: function () {
+    this.setData({
+      review: '',
+      ready: false,
     })
   }
 })
