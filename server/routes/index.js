@@ -32,6 +32,9 @@ router.post('/review', validationMiddleware, controllers.review.add)
 // 获取影评列表
 router.get('/review/:id', controllers.review.list)
 
+// 获取我对某部影评的评价
+router.get('/review/my/:id', validationMiddleware, controllers.review.my)
+
 // 获取影评详情
 router.get('/review/detail/:id', controllers.review.detail)
 

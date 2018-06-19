@@ -32,6 +32,9 @@ var config = {
         // 获取评影评列表
         reviewList: `${host}/weapp/review/`,
 
+        // 获取我对某部电影的影评
+        myReview: `${host}/weapp/review/my/`,
+
         // 获取评影评详情
         reviewDetail: `${host}/weapp/review/detail/`,
 

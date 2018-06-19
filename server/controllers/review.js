@@ -41,4 +41,19 @@ module.exports = {
     let id = ctx.params.id
     ctx.state.data = (await DB.query('SELECT review.id, review.content, review.voice, review.avatar, review.username, movies.image, movies.title, review.movie_id FROM review RIGHT JOIN movies ON review.movie_id = movies.id WHERE review.id = ?', id))[0]
   },
+
+  /**
+   * 获取我对某一部影片的评价
+   * 
+   */
+  my: async ctx => {
+    let user = ctx.state.$wxInfo.userinfo.openId
+    let movieId = ctx.params.id
+
+    if (!isNaN(movieId) && user) {
+      ctx.state.data = await DB.query('SELECT * FROM review RIGH JOIN movies ON movie_id = movies.id WHERE movie_id = ? AND user = ?', [movieId, user])
+    } else {
+      ctx.state.data = []
+    }
+  },
 }

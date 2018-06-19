@@ -12,7 +12,20 @@ Page({
   data: {
     reviewDetail: null,
     showBottomButton: false,
-    isPlaying: false
+    isPlaying: false,
+    myReview: null,
+    disableActions: false
+  },
+
+  /**
+   * 获取我发表的影评
+   */
+  navToMyReview() {
+    // 将当前数据换成我发表过的评论，并且关闭收藏和评论操作
+    this.setData({
+      reviewDetail: this.data.myReview,
+      disableActions: true
+    })
   },
 
   /**
@@ -109,9 +122,28 @@ Page({
     let reviewDetail = this.data.reviewDetail
     let id = e.currentTarget.dataset.id || reviewDetail.movie_id
     let type = e.currentTarget.dataset.type
-    console.log('type', type)
     wx.navigateTo({
       url: `/pages/editReview/editReview?id=${id}&type=${type}&title=${reviewDetail.title}&image=${reviewDetail.image}`,
+    })
+  },
+
+  /**
+   * 获取我对某部电影的影评
+   */
+  getMyReview(movieId) {
+    qcloud.request({
+      url: config.service.myReview + movieId,
+      login: true,
+      success: result => {
+
+        let data = result.data
+
+        if (!data.code) {
+          this.setData({
+            myReview: data.data && data.data[0]
+          })
+        }
+      }
     })
   },
 
@@ -125,6 +157,7 @@ Page({
 
     qcloud.request({
       url: config.service.reviewDetail + id,
+      login: true,
       success: result => {
         wx.hideLoading()
 
@@ -133,7 +166,9 @@ Page({
         if (!data.code) {
           this.setData({
             reviewDetail: data.data
-          })
+          }, () => 
+            this.getMyReview(data.data.movie_id)
+          )
         } else {
           setTimeout(() => {
             wx.navigateBack()
@@ -162,7 +197,8 @@ Page({
    */
   onHide: function () {
     this.setData({
-      showBottomButton: false
+      showBottomButton: false,
+      disableActions: false,
     })
   }
 })

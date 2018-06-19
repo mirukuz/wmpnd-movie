@@ -41,12 +41,24 @@
           点击播放语音影评
         </view>
       </view>
-      <view class='buttons'>
+      <view
+        class='buttons'
+        wx:if='{{!disableActions}}'
+      >
         <button bindtap='addToCollection'>
           收藏影评
         </button>
-        <button bindtap='showModal'>
+        <button
+          wx:if='{{!myReview}}'
+          bindtap='showModal'
+        >
           写影评
+        </button>
+        <button
+          wx:if='{{!!myReview}}'
+          bindtap='navToMyReview'
+        >
+          查看我发表的影评
         </button>
       </view>
     </view>
