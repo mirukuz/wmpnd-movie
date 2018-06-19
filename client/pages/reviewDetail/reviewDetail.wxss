@@ -71,6 +71,7 @@ button {
   background-color:#dedede;
 }
 .bottom-button-wrapper {
+  z-index:1;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -104,6 +105,7 @@ button {
   border-top: 5rpx solid #ddd;
 }
 .back-home-button {
+  z-index:0;
   position: fixed;
   bottom: 0;
   left: 0;
