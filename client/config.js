@@ -11,25 +11,20 @@ var config = {
     service: {
         host,
 
+        // 登录地址，用于建立会话
+        loginUrl: `${host}/weapp/login`,
+
+        // 测试的请求地址，用于测试会话
+        user: `${host}/weapp/user`,
+
+        // 上传接口
+        uploadUrl: `${host}/weapp/upload`,
+
         // 拉取电影列表
         movieList: `${host}/weapp/movie`,
 
         // 获取电影详情
         movieDetail: `${host}/weapp/movie/`,
-
-        // 登录地址，用于建立会话
-        loginUrl: `${host}/weapp/login`,
-
-        // 测试的请求地址，用于测试会话
-        requestUrl: `${host}/weapp/user`,
-
-        // 测试的信道服务地址
-        tunnelUrl: `${host}/weapp/tunnel`,
-
-        // 上传图片接口
-        uploadUrl: `${host}/weapp/upload`,
-
-        user: `${host}/weapp/user`,
 
         // 添加影评
         addReview: `${host}/weapp/review`,
@@ -46,7 +41,7 @@ var config = {
         // 添加到用户收藏列表
         addCollection: `${host}/weapp/collection`,
 
-        // 获取用户收藏列表
+        // 获取用户列表
         myList: `${host}/weapp/myList`,
     }
 };

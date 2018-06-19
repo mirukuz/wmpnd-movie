@@ -1,5 +1,16 @@
 <!--pages/collection/collection.wxml-->
-<view class='page-heading'>收藏的影评</view>
+<view
+  wx:if='{{publishedList && publishedList.length == 0}}'
+  class='empty-list'
+>
+  暂无收藏的影评
+</view>
+<view
+  wx:if='{{collectionList && collectionList.length > 0}}'
+  class='page-heading'
+>
+  收藏的影评
+</view>
 <view
   class='item'
   wx:for='{{collectionList}}'
@@ -20,12 +31,22 @@
       {{ item.content }}
     </view>
     <view
-      class='review-voice'
       wx:if='{{item.voice}}'
       catchtap='playRecording'
       data-path='{{item.voice}}'
+      data-id='{{item.id}}'
     >
-      播放录音
+      <view
+        class='review-voice-playing'
+        wx:if='{{isPlaying == item.id}}'>
+        播放中...
+      </view>
+      <view
+        class='review-voice'
+        wx:else
+      >
+        点击播放语音影评
+      </view>
     </view>
     <view class='reviewer'>
       <image
@@ -38,7 +59,18 @@
     </view>
   </view>
 </view>
-<view class='page-heading'>发表的影评</view>
+<view
+  wx:if='{{publishedList && publishedList.length == 0}}'
+  class='empty-list'
+>
+  暂无发表的影评
+</view>
+<view
+  wx:if='{{publishedList && publishedList.length > 0}}'
+  class='page-heading'
+>
+  发表的影评
+</view>
 <view
   class='item'
   wx:for='{{publishedList}}'
@@ -59,10 +91,22 @@
       {{ item.content }}
     </view>
     <view
-      class='review-voice'
       wx:if='{{item.voice}}'
+      catchtap='playRecording'
+      data-path='{{item.voice}}'
+      data-id='{{item.id}}'
     >
-      播放录音
+      <view
+        class='review-voice-playing'
+        wx:if='{{isPlaying == item.id}}'>
+        播放中...
+      </view>
+      <view
+        class='review-voice'
+        wx:else
+      >
+        点击播放语音影评
+      </view>
     </view>
     <view class='reviewer'>
       <image

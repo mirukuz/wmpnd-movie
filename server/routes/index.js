@@ -26,26 +26,16 @@ router.get('/movie', controllers.movie.list)
 // 获取电影详情
 router.get('/movie/:id', controllers.movie.detail)
 
-// --- 信道服务接口 Demo --- //
-// GET  用来响应请求信道地址的
-router.get('/tunnel', controllers.tunnel.get)
-// POST 用来处理信道传递过来的消息
-router.post('/tunnel', controllers.tunnel.post)
-
-// --- 客服消息接口 Demo --- //
-// GET  用来响应小程序后台配置时发送的验证请求
-router.get('/message', controllers.message.get)
-// POST 用来处理微信转发过来的客服消息
-router.post('/message', controllers.message.post)
-
 // 添加影评
 router.post('/review', validationMiddleware, controllers.review.add)
 
 // 获取影评列表
 router.get('/review/:id', controllers.review.list)
 
+// 获取影评详情
 router.get('/review/detail/:id', controllers.review.detail)
 
+// 获取首页推荐影片
 router.get('/recommendation', controllers.recommendation.detail)
 
 // 添加到用户收藏列表

@@ -1,6 +1,4 @@
 <!--pages/reviewDetail/reviewDetail.wxml-->
-<!--pages/editReview/editReview.wxml-->
-<!--pages/detail/detail.wxml-->
 <view class='wrapper'>
   <view class='card'>
     <image
@@ -75,5 +73,10 @@
   >
     音频
   </view>
-  <view class='bottom-button' bindtap='hideModal'>取消</view>
+  <view
+    class='bottom-button'
+    bindtap='hideModal'
+  >
+    取消
+  </view>
 </view>

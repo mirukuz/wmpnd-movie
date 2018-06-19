@@ -43,6 +43,9 @@ Page({
     })
   },
 
+  /**
+   * 加入影评收藏
+   */
   addToCollection() {
     wx.showLoading({
       title: '正在添加到收藏...',

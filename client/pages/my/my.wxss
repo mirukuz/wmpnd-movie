@@ -5,6 +5,12 @@
   font-size: 28rpx;
   text-align: center;
 }
+.empty-list {
+  color: #4c5a5e;
+  margin: 50rpx auto 20rpx auto;
+  font-size: 28rpx;
+  text-align: center;
+}
 .wrapper {
   background-color: #eee;
   width: 100%;
@@ -40,14 +46,19 @@
   font-size: 28rpx;
   margin-bottom: 10rpx;
 }
-.review-voice {
+.review-voice, .review-voice-playing {
   font-size: 28rpx;
   margin-bottom: 10rpx;
-  background-color:#eee;
   border-radius: 10rpx;
   border: 1px solid #dedede;
   color: #4c5a5e;
   padding:8rpx 16rpx;
+}
+.review-voice {
+  background-color:#eee;
+}
+.review-voice-playing {
+  background-color:#dedede;
 }
 .reviewer {
   display: flex;
