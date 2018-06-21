@@ -26,3 +26,71 @@ INSERT INTO `movies` (`id`, `image`, `title`, `category`, `description`) VALUES
 (13, CONCAT(@IMAGE_BASE_URL, 'p1461851991.webp'), '机器人总动员', '爱情 / 科幻 / 动画 / 冒险', '公元2805年，人类文明高度发展，却因污染和生活垃圾大量增加使得地球不再适于人类居住。地球人被迫乘坐飞船离开故乡，进行一次漫长无边的宇宙之旅。临行前他们委托Buynlarge的公司对地球垃圾进行清理，该公司开发了名为WALL·E（Waste Allocation Loa d Lifters – Earth 地球废品分装员）的机器人担当此重任。这些机器人按照程序日复一日、年复一年辛勤工作，但随着时间的流逝和恶劣环境的侵蚀，WALL·E们接连损坏、停止运动。最后只有一个仍在进行这项似乎永无止境的工作。经历了漫长的岁月，它开始拥有了自己的意识。它喜欢将收集来的宝贝小心翼翼藏起，喜欢收工后看看几百年前的歌舞片，此外还有一只蟑螂朋友作伴。直到有一天，一艘来自宇宙的飞船打破了它一成不变的生活……'),
 (14, CONCAT(@IMAGE_BASE_URL, 'p1910824340.webp'), '死亡诗社', '剧情', '威尔顿预备学院以其沉稳凝重的教学风格和较高的升学率闻名，作为其毕业班的学生，理想就是升入名校。新学期文学老师约翰·基汀（罗宾·威廉姆斯 饰）的到来如同一阵春风，一反传统名校的严肃刻板。基汀带学生们在校史楼内聆听死亡的声音，反思生的意义 ；让男生们在绿茵场上宣读自己的理想；鼓励学生站在课桌上，用新的视角俯瞰世界。老师自由发散式的哲学思维让学生内心产生强烈的共鸣，他们渐渐学会自己思考与求索，勇敢的追问人生的路途，甚至违反门禁，成立死亡诗社，在山洞里击节而歌！基汀教授、基汀老师、基汀队长，他的教育宛若春风化雨，润物无声的留在每个人心里…'),
 (15, CONCAT(@IMAGE_BASE_URL, 'p2206088801.webp'), '星际穿越', '剧情 / 科幻 / 冒险', '近未来的地球黄沙遍野，小麦、秋葵等基础农作物相继因枯萎病灭绝，人类不再像从前那样仰望星空，放纵想象力和灵感的迸发，而是每日在沙尘暴的肆虐下倒数着所剩不多的光景。在家务农的前NASA宇航员库珀（马修·麦康纳 Matthew McConaughey 饰）接连在女儿墨菲（麦肯吉·弗依 Mackenzie Foy 饰）的书房发现奇怪的重力场现象，随即得知在某个未知区域内前NASA成员仍秘密进行一个拯救人类的计划。多年以前土星附近出现神秘虫洞，NASA借机将数名宇航员派遣到遥远的星系寻找适合居住的星球。在布兰德教授（迈克尔·凯恩 Michael Caine 饰）的劝说下，库珀忍痛告别了女儿，和其他三名专家教授女儿艾米莉亚·布兰德（安妮·海瑟薇 Anne Hathaway 饰）、罗米利（大卫·吉雅西 David Gyasi 饰）、多伊尔（韦斯·本特利 Wes Bentley 饰）搭乘宇宙飞船前往目前已知的最有希望的三颗星球考察。他们穿越遥远的星系银河，感受了一小时七年光阴的沧海桑田，窥见了未知星球和黑洞的壮伟与神秘。在浩瀚宇宙的绝望而孤独角落，总有一份超越了时空的笃定情怀将他们紧紧相连……');
+
+--
+-- Table structure for table `review`
+--
+
+CREATE TABLE `review` (
+  `id` int(11) NOT NULL,
+  `user` varchar(255) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `avatar` varchar(255) NOT NULL,
+  `content` varchar(511) CHARACTER SET utf8 DEFAULT NULL,
+  `voice` varchar(1023) DEFAULT NULL,
+  `movie_id` int(11) NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for table `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `movie` (`movie_id`);
+
+--
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- Constraints for table `review`
+--
+ALTER TABLE `review`
+  ADD CONSTRAINT `review_link` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`id`);
+
+--
+-- Table structure for table `collection_user`
+--
+
+CREATE TABLE `collection_user` (
+  `id` int(11) NOT NULL,
+  `user` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for table `collection_user`
+--
+ALTER TABLE `collection_user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Constraints for table `collection_user`
+--
+ALTER TABLE `collection_user`
+  ADD CONSTRAINT `collection_link` FOREIGN KEY (`id`) REFERENCES `review` (`id`);
+
+--
+-- Dumping data for table `review`, Uncomment it if needed
+--
+-- INSERT INTO `review` (`id`, `user`, `username`, `avatar`, `content`, `voice`, `movie_id`, `create_time`) VALUES
+-- (42, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', '\n《复联3》一上映，全国漫威粉哭倒一片，上微博、朋友圈转一圈，简直是大型的哭丧现场。 结局这么惨，《复仇者联盟4》的故事要怎么继续？要怎么圆回来？ 这是我们最想知道的事情，恨不能穿越时空赶紧看完《复联4》。 ', NULL, 1, '2018-06-19 20:27:41'),
+-- (43, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', '\n观影前的历史。 当诺兰的电影《敦刻尔克》把镜头聚焦在普通人身上时，这场「胜利大逃亡」只是丘吉尔当上首相后，所面临众多难题之一。', NULL, 2, '2018-06-19 20:28:22'),
+-- (44, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', '怀旧的摇滚，初次当导演的汉克斯大叔还是带给我很多的惊喜的。免不了背书那一张张的熟脸：美入精灵的泰勒公主（虽然有点高大壮，但气质挡不住），初出茅庐的查理兹·塞隆，自然还有大叔的儿子科林斯……音乐不错，原声大碟下载中', NULL, 3, '2018-06-19 20:29:17'),
+-- (45, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', NULL, 'https://qcloudtest-1256907269.cos.ap-guangzhou.myqcloud.com/1529411456148-BkuYvO8-m.webm', 4, '2018-06-19 20:30:57'),
+-- (46, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', '旅行的意义，不单单在沿途的风景，更重要的是在路上遇到的人 这是一部在文艺片界备受推崇的话痨艳遇电影，整部片子唯美，浪漫，自然，真实。', NULL, 7, '2018-06-19 20:34:01'),
+-- (47, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', '人物：一男一女；时间：相遇之后，天亮以前；地点：维也纳；事件：一场漫无目的游荡，所有的一切清晰直白没有任何想象空间，无关乎情节，只关乎细节。', NULL, 7, '2018-06-19 20:38:39'),
+-- (48, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', '这是一部极其动人的爱情片，但却也是一个极其简单的爱情故事。', NULL, 7, '2018-06-19 20:41:13'),
+-- (49, 'oITlN5YyHccxe7ghiGrGcRPSeV2M', 'Milk', 'https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eodaQmNuh7kKCSnxclKOibnJXB5R5tkibxTfFIay9TTeLiaca8ibjXnFYJcSdMgppj1hA1EQkatlAZKBQ/132', NULL, 'https://qcloudtest-1256907269.cos.ap-guangzhou.myqcloud.com/1529412618391-H1GGnOUZm.webm', 7, '2018-06-19 20:50:25');
